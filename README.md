@@ -6,6 +6,7 @@
 版本号: 1.0 / 2022.7.12<br/>
 
 1. 下载 [AutoX.Js (app-dev-arm64-v8a-release-unsigned-signed.apk) (仅限安卓)](https://github.com/kkevsekk1/AutoX/releases) 安装到手机上<br/>
-2. 下载自动化脚本, 放进 "手机储存 / 脚本" 文件夹里<br/>
-3. 打开AutoX.Js, 编辑 "同沙生态公园自动预约脚本.js" 文件, 在文件前部配置好7项参数: 屏幕解锁密码 \Pushplus的Token \拜访时段 \访客姓名 \手机号 \人数 \车牌号<br/>
-4. 配置脚本自动运行触发条件
+2. 下载自动化脚本，放进 "手机储存 / 脚本" 文件夹里<br/>
+3. 打开AutoX.Js，编辑 "同沙生态公园自动预约脚本.js" 文件，在文件前部配置好7项参数：屏幕解锁密码、Pushplus的Token、拜访时段、访客姓名、手机号、人数、车牌号<br/>
+4. 配置脚本自动运行触发条件<br/>
+![微信截图_20220713123131](https://user-images.githubusercontent.com/16776856/178651158-1dc94d2b-5356-4f64-a784-37f9834d6385.png)
