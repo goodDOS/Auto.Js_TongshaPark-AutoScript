@@ -15,8 +15,9 @@
 <br/>
 [网络开关触发脚本启动模块.js](https://github.com/goodDOS/Auto.Js_TongshaPark-AutoScript/blob/main/%E7%BD%91%E7%BB%9C%E5%BC%80%E5%85%B3%E8%A7%A6%E5%8F%91%E8%84%9A%E6%9C%AC%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%9D%97.js)
 <br/>
-
+<br/>
 # 使用方法
+建议在闲置手机上使用
 1. 下载 [AutoX.Js (app-dev-arm64-v8a-release-unsigned-signed.apk) (仅限安卓)](https://github.com/kkevsekk1/AutoX/releases) 安装到手机上<br/>
 2. 下载自动化脚本，放进 "手机储存 / 脚本" 文件夹里<br/>
 3. 打开AutoX.Js，编辑 "同沙生态公园自动预约脚本.js" 文件，在文件前部配置好7项参数：屏幕解锁密码、Pushplus的Token、拜访时段、访客姓名、手机号、人数、车牌号<br/>
