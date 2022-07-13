@@ -6,3 +6,5 @@
 版本号: 1.0 / 2022.7.12<br/>
 
 1. 下载 [AutoX.Js (app-dev-arm64-v8a-release-unsigned-signed.apk) (仅限安卓)](https://github.com/kkevsekk1/AutoX/releases) 安装到手机上<br/>
+2. 下载自动化脚本, 放进 "手机储存/脚本" 文件夹里<br/>
+3. 打开AutoX.Js, 编辑 "同沙生态公园自动预约脚本.js" 文件, 配置好参数<br/>
