@@ -8,10 +8,10 @@
 //*  JavaScript
 //*
 //*  运行APP平台: 
-//*  Auto.Js / AutoX.Js
+//*  Auto.Js 及其衍生程序
 //*
 //*  版本号: 
-//*  1.0 / 2022.7.12
+//*  1.1 / 2022.7.14
 //*
 //*  代码来源: 
 //*  [主体功能]模块    修改!自  NewDay_     的 <auto.js 公众号自动签到>          来源链接: https://blog.csdn.net/NewDay_/article/details/109353414
@@ -206,10 +206,32 @@ function day1(){
     null;
 }
 function day2(){
-    swipe(128, hH - 256, 128, hH - 336, 500);
+    try{
+        swipe(128, hH - 256, 128, hH - 336, 500);
+    }
+    catch(err){
+        log(err);
+        if(err!==null){
+            var ErrType = "错误: 屏幕宽高参数获取错误";
+            var ErrMsg = "屏幕宽高参数获取错误,故 '拜访时段' 列表无法滑动选择日期,只能预约为: 明天";
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+        }
+    }
 }
 function day3(){
-    swipe(128, hH - 256, 128, hH - 512, 500);
+    try{
+        swipe(128, hH - 256, 128, hH - 512, 500);
+    }
+    catch(err){
+        log(err);
+        if(err!==null){
+            var ErrType = "错误: 屏幕宽高参数获取错误";
+            var ErrMsg = "屏幕宽高参数获取错误,故 '拜访时段' 列表无法滑动选择日期,只能预约为: 明天";
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+        }
+    }
 }
 
 //********************************************/
@@ -558,6 +580,7 @@ sleep(5000);
 for(var i=0;i<6;i++){
     for(var i=0;i<10;i++){
         className("android.view.View").scrollUp();
+        toastLog("上滑 (" + i + "/9)");
         sleep(500);
     }
     var ClickListButton = className("android.widget.TextView").text("详细").findOne(5000);
