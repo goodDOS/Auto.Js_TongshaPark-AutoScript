@@ -7,12 +7,12 @@
 <br/>
 <br/>
 # 脚本下载 (右键另存为)
-主体脚本
+主体脚本：
 <br/>
 [同沙生态公园自动预约脚本.js](https://github.com/goodDOS/Auto.Js_TongshaPark-AutoScript/blob/main/%E5%90%8C%E6%B2%99%E7%94%9F%E6%80%81%E5%85%AC%E5%9B%AD%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6%E8%84%9A%E6%9C%AC.js)
 <br/>
 <br/>
-辅助脚本 (非必选)
+辅助脚本 (非必选)：
 <br/>
 [网络开关触发脚本启动模块.js](https://github.com/goodDOS/Auto.Js_TongshaPark-AutoScript/blob/main/%E7%BD%91%E7%BB%9C%E5%BC%80%E5%85%B3%E8%A7%A6%E5%8F%91%E8%84%9A%E6%9C%AC%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%9D%97.js)
 <br/>
@@ -41,9 +41,4 @@ APP检测到网络变动<br/>
 ![微信截图_20220713123131](https://user-images.githubusercontent.com/16776856/178651158-1dc94d2b-5356-4f64-a784-37f9834d6385.png)<br/>
 <br/>
 <br/>
-# 更新日志<br/>
-2022/7/14 Version 1.1 [同沙生态公园自动预约脚本.js] 修复了获取屏幕宽高参数错误就摆烂的问题（208-235行）
-<br/>
-<br/>
-2022/7/12 Version 1.0 [网络开关触发脚本启动模块.js] 脚本发布<br/>
-2022/7/12 Version 1.0 [同沙生态公园自动预约脚本.js] 脚本发布
+[# 更新日志](https://github.com/goodDOS/Auto.Js_TongshaPark-AutoScript/releases)
