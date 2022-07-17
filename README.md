@@ -41,4 +41,5 @@ APP检测到网络变动<br/>
 ![微信截图_20220713123131](https://user-images.githubusercontent.com/16776856/178651158-1dc94d2b-5356-4f64-a784-37f9834d6385.png)<br/>
 <br/>
 <br/>
-[# 更新日志](https://github.com/goodDOS/Auto.Js_TongshaPark-AutoScript/releases)
+# 更新日志<br/>
+https://github.com/goodDOS/Auto.Js_TongshaPark-AutoScript/releases
