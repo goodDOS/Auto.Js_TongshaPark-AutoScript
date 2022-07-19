@@ -293,7 +293,7 @@ function getMemoryUsage(){
 function JsExit(){
     device.cancelKeepingAwake();
     toastLog(">终止脚本并锁屏");
-    sleep(20000);
+    sleep(5000);
     home();//模拟按下Home键/按下Home键
     lockScreen();
     exit();
@@ -729,7 +729,7 @@ var ErrMsg = OutputMsg01 + "<br/><br/>" + OutputMsg02 + "<br/><br/>" + OutputMsg
 Pushplus(ErrType,ErrMsg);
 toastLog(ErrType + ErrMsg);
 
-sleep(500);
+sleep(13000);
 toastLog(">完成! 返回桌面并终止脚本");
 
 JsExit();
