@@ -11,10 +11,11 @@
 //*  Auto.Js 及其衍生程序
 //*
 //*  版本号: 
-//*  1.3 / 2022.7.19
+//*  1.4 / 2022.8.5
 //*
 //*  代码来源: 
-//*  [主体功能]模块    修改!自  NewDay_     的 <auto.js 公众号自动签到>          来源链接: https://blog.csdn.net/NewDay_/article/details/109353414
+//*  [主体功能]模块    修改!自  NewDay_     的 <auto.js 公众号自动签到>          来源链接:  https://blog.csdn.net/NewDay_/article/details/109353414
+//*  [脚本关闭]模块    修改!自  牙叔教程     的 <autojs之停止脚本的6种方法>        来源链接:  https://blog.csdn.net/snailuncle2/article/details/115090390
 //*  [网络检测]模块    修改!自  zjing125    的 <auto.js_HTTP请求的响应>          来源链接:  https://blog.csdn.net/ZHOU125disorder/article/details/113853952
 //*  [亮屏解锁]模块    修改!自  ProAi       的 <AutoJS解锁手机屏幕>              来源链接:  https://blog.csdn.net/ProAi/article/details/120969799
 //*  [消息推送]模块    修改!自  牙叔教程     的 <autojs发微信通知>                来源链接:  https://blog.csdn.net/snailuncle2/article/details/115733421
@@ -88,6 +89,21 @@ function SetSwipe(){
 //********************************************/
 //*
 //*
+//*  ⚠️以下是[脚本关闭]运行模块，请勿乱改！⚠️  */
+//*
+//*
+//********************************************/
+
+engines.all().map((ScriptEngine) => {
+    if(engines.myEngine().toString()!==ScriptEngine.toString()){
+        ScriptEngine.forceStop();
+        toastLog("已关闭其它正在运行的脚本!");
+    }
+});
+
+//********************************************/
+//*
+//*
 //*  ⚠️以下是[网络检测]运行模块，请勿乱改！⚠️  */
 //*
 //*
@@ -107,7 +123,7 @@ for(var i=0;i<17;i++){
         }
     }
     catch(err){
-        log(err);
+        log("**(此条网络报错已省略)**");
         if(err!==null){
             toastLog("微信开放平台不可访问,网络异常,将在5分钟后重试!重试次数: (" + i + "/16) ");
         }
@@ -134,7 +150,7 @@ for(var i=0;i<17;i++){
             }
         }
         catch(err){
-            log(err);
+            log("**(此条解锁报错已省略)**");
         }
     }
     function unlock(){// 解锁屏幕
@@ -148,7 +164,7 @@ for(var i=0;i<17;i++){
             }
         }
         catch(err){
-            log(err);
+            log("**(此条解锁报错已省略)**");
         }
     }
 unlock();
@@ -174,22 +190,24 @@ sleep(1000);
 
 //  [Pushplus推送加] 模块 微信公众号推送
 function Pushplus(ErrType, ErrMsg){
+    log("↓-/-/-/-/推送内容/-/-/-/-↓");
     try{
         let token = UseToken;
         let url = "https://www.pushplus.plus/send";
         let r = http.postJson(url, {
         token: token,
         title: "[同沙] " + ErrType,
-        content: ErrMsg + "<br/><br/>----------------------------------------<br/><br/>设备型号: " + device.brand + " " + device.product + "<br/>设备电量: " + device.getBattery() + "%<br/>内存剩余: " + getMemoryUsage() + "%<br/>发送时间: " + TrsTime() + "<br/><br/>东莞市同沙生态公园公众号<br/>移动访客预约信息填写<br/>自动化执行脚本<br/>消息推送🤖",
+        content: ErrMsg + "<br/><br/>" + AppPageGet() + "<br/><br/>----------------------------------------<br/><br/>设备型号: " + device.brand + " " + device.product + "<br/>设备电量: " + device.getBattery() + "%<br/>内存剩余: " + getMemoryUsage() + "%<br/>发送时间: " + TrsTime() + "<br/><br/>东莞市同沙生态公园公众号<br/>移动访客预约信息填写<br/>自动化执行脚本<br/>消息推送🤖",
         });
         log(r.body.string());
     }
     catch(err){
-        log(err);
+        log("**(此条推送报错已省略)**");
         if(err!==null){
             toastLog("消息推送链接无法访问,发信失败!");
         }
     }
+    log("↑-/-/-/-/推送内容/-/-/-/-↑");
 }
 
 //********************************************/
@@ -211,7 +229,7 @@ function day2(){
         swipe(128, hH - 256, 128, hH - 336, 500);
     }
     catch(err){
-        log(err);
+        log("**(此条滑动报错已省略)**");
         if(err!==null){
             var ErrType = "错误: 屏幕宽高参数获取错误";
             var ErrMsg = "屏幕宽高参数获取错误,故 '拜访时段' 列表无法滑动选择日期,只能预约为: 明天";
@@ -225,7 +243,7 @@ function day3(){
         swipe(128, hH - 256, 128, hH - 512, 500);
     }
     catch(err){
-        log(err);
+        log("**(此条滑动报错已省略)**");
         if(err!==null){
             var ErrType = "错误: 屏幕宽高参数获取错误";
             var ErrMsg = "屏幕宽高参数获取错误,故 '拜访时段' 列表无法滑动选择日期,只能预约为: 明天";
@@ -260,7 +278,7 @@ function TrsTime(){
         return YYMMDDhhmmss = YY + MM + DD +" "+hh + mm + ss;
     }
     catch(err){
-        log(err);
+        log("**(此条时间报错已省略)**");
         if(err!==null){
             toastLog("无法获取网络时间!");
         }
@@ -293,10 +311,67 @@ function getMemoryUsage(){
 function JsExit(){
     device.cancelKeepingAwake();
     toastLog(">终止脚本并锁屏");
+    AppPageGet();
     sleep(5000);
     home();//模拟按下Home键/按下Home键
     lockScreen();
     exit();
+}
+
+//********************************************/
+//*
+//*
+//*  ⚠️以下是[页面获取]运行模块，请勿乱改！⚠️  */
+//*
+//*
+//********************************************/
+
+function AppPageGet(){
+    if(className("android.widget.RelativeLayout").desc("搜索").findOne(100)!==null){
+        var AppPage_2 = "---微信首页---";
+        log(AppPage_2);
+        return AppPage_2;
+    }else if(className("android.widget.TextView").desc("取消按钮").text("取消").findOne(100)!==null){
+        var AppPage_3 = "---微信搜索页---";
+        log(AppPage_3);
+        return AppPage_3;
+    }else if(className("android.widget.Button").text("预约入园 .").findOne(100)!==null){
+        var AppPage_4 = "---微信搜索结果页---";
+        log(AppPage_4);
+        return AppPage_4;
+    }else if(className("android.widget.Button").text("预约").findOne(100)!==null){
+        var AppPage_5 = "---同沙生态公园预约首页---";
+        log(AppPage_5);
+        return AppPage_5;
+    }else if(className("android.view.View").text("拜访时段").findOne(100)!==null){
+        var AppPage_6 = "---同沙生态公园日期选择页---";
+        log(AppPage_6);
+        return AppPage_6;
+    }else if(className("android.view.View").text("访客信息").findOne(100)!==null){
+        var AppPage_7 = "---同沙生态公园访客信息填写页---";
+        log(AppPage_7);
+        return AppPage_7;
+    }else if(className("android.view.View").text("暂无历史记录").findOne(100)!==null){
+        var AppPage_8 = "---同沙生态公园访客信息填写历史记录页---";
+        log(AppPage_8);
+        return AppPage_8;
+    }else if(className("android.widget.Button").text("查看记录").findOne(100)!==null){
+        var AppPage_9 = "---同沙生态公园预约结果页---";
+        log(AppPage_9);
+        return AppPage_9;
+    }else if(className("android.widget.TextView").text("详细").findOne(100)!==null){
+        var AppPage_10 = "---同沙生态公园拜访记录页---";
+        log(AppPage_10);
+        return AppPage_10;
+    }else if(className("android.view.View").textContains("*").textContains("手机号").findOne(100)!==null){
+        var AppPage_11 = "---同沙生态公园拜访记录详情页---";
+        log(AppPage_11);
+        return AppPage_11;
+    }else{
+        var AppPage_12 = "---未知页---";
+        log(AppPage_12);
+        return AppPage_12;
+    }
 }
 
 //********************************************/
@@ -310,60 +385,74 @@ function JsExit(){
 auto.waitFor();//开启无障碍服务
 toastLog(">关闭-重启微信");
 sleep(5000);
-var packageName  = "com.tencent.mm";//得到微信的包名
-if(packageName!==null){
-    openAppSetting(packageName);//打开微信的设置页用于关闭微信
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "找不到 '微信' 应用,请确认已安装 [Step -1]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-	JsExit();
+for(var i=0;i<6;i++){
+    var packageName  = "com.tencent.mm";//得到微信的包名
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到 '微信' 应用,请确认已安装 [Step -1]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(packageName!==null){
+        openAppSetting(packageName);//打开微信的设置页用于关闭微信
+        break;
+    }
 }
 sleep(5000);
-var close01 = className("android.widget.Button").textMatches(/(.*强.*|.*停.*|.*结.*|.*行.*)/).findOne(500);//通过控件找到强行停止，并点击 [鸿蒙系统、类原生安卓系统]
-if (close01!==null){
-    click(close01.bounds().centerX(),close01.bounds().centerY());
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "无法重启微信,找不到: 微信 '强行停止' 按钮 [Step 0.1]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-	JsExit();
+for(var i=0;i<6;i++){
+    var close01 = className("android.widget.Button").textMatches(/(.*强.*|.*停.*|.*结.*|.*行.*)/).findOne(500);//通过控件找到强行停止，并点击 [鸿蒙系统、类原生安卓系统]
+    if (close01!==null){
+        click(close01.bounds().centerX(),close01.bounds().centerY());
+        break;
+    }
 }
 sleep(500);
-var close02 = className("android.widget.Button").textMatches(/(.*强.*|.*停.*|.*结.*|.*行.*|.*确.*|.*定.*)/).findOne(500);//通过控件找到强行停止，并点击 [鸿蒙系统、类原生安卓系统]
-if (close02!==null){
-    click(close02.bounds().centerX(),close02.bounds().centerY());
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "无法重启微信,找不到: 微信 强行停止的 '确定' 按钮 [Step 0.2]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-	JsExit();
+for(var i=0;i<6;i++){
+    var close02 = className("android.widget.Button").textMatches(/(.*强.*|.*停.*|.*结.*|.*行.*|.*确.*|.*定.*)/).findOne(500);//通过控件找到强行停止，并点击 [鸿蒙系统、类原生安卓系统]
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "无法重启微信,找不到: 微信 强行停止的 '确定' 按钮 [Step 0.1]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if (close02!==null){
+        click(close02.bounds().centerX(),close02.bounds().centerY());
+        break;
+    }
 }
 sleep(500);
 toastLog(">启动微信");
 launch("com.tencent.mm");//打开微信
 sleep(5000)
 function FindSearch_1(){
-    var FindSearch = className("android.widget.RelativeLayout").desc("搜索").findOne(30000);//找到搜索
-    if(FindSearch!==null){
-        toastLog(">点击搜索按钮");
-        while(!click(FindSearch.bounds().centerX(),FindSearch.bounds().centerY()));//点击搜索
-    }else{
-        var ErrType = ErrType01;
-        var ErrMsg = "找不到: 微信主界面 '搜索按钮' [Step 1]";
-        Pushplus(ErrType,ErrMsg);
-        toastLog(ErrType + ErrMsg);
-        JsExit();
+    for(var i=0;i<6;i++){
+        var FindSearch = className("android.widget.RelativeLayout").desc("搜索").findOne(5001);//找到搜索
+        if(i==5){
+            var ErrType = ErrType01;
+            var ErrMsg = "找不到: 微信主界面 '搜索按钮' [Step 1]";
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+            JsExit();
+        }else if(FindSearch!==null){
+            AppPageGet();
+            toastLog(">点击搜索按钮");
+            while(!click(FindSearch.bounds().centerX(),FindSearch.bounds().centerY()));//点击搜索
+            break;
+        }
     }
 }
 FindSearch_1();
 sleep(5000);//停止5秒
 for(var i=0;i<6;i++){
     var FindSearch_Check = className("android.widget.TextView").desc("取消按钮").text("取消").findOne(5000);
-    if(FindSearch_Check!==null){
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到: 微信搜索界面 '搜索框' [Step 1.1]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(FindSearch_Check!==null){
+        AppPageGet();
         toastLog(">填充搜索词");
         setText("东莞市同沙生态公园公众号");//设置输入搜索文字
         break;
@@ -371,41 +460,39 @@ for(var i=0;i<6;i++){
         FindSearch_1();
     }
     sleep(500);
-    if(i==5){
-        var FindSearch_Check = className("android.widget.TextView").desc("取消按钮").text("取消").findOne(5000);
-        if(FindSearch_Check==null){
-            var ErrType = ErrType01;
-            var ErrMsg = "找不到: 微信搜索界面 '搜索框' [Step 1.1]";
-            Pushplus(ErrType,ErrMsg);
-            toastLog(ErrType + ErrMsg);
-            JsExit();
-        }
-    }
 }
 sleep(5000);
-var ClickSearchResults = className("android.widget.TextView").desc("东莞市同沙生态公园公众号按钮").textContains("东莞市同沙生态公园公众号").findOne(30000);//判断搜索结果
-if(ClickSearchResults!==null){//找不到直接退出
-    toastLog(">点击搜索结果");
-    click(ClickSearchResults.bounds().centerX(),ClickSearchResults.bounds().centerY());//点击搜索结果
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "找不到: '东莞市同沙生态公园公众号' 搜索结果关键词[Step 2]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-    JsExit();
-}
-sleep(5000);//停止5秒，等待页面加载完成
-function FindTarget01_1(){
-    var FindTarget01 = className("android.widget.Button").text("预约入园 .").findOne(30000);//找到预约入园，5秒后点击
-    if(FindTarget01!==null){//找不到退出
-        toastLog(">点击 '预约入园'");
-        click(FindTarget01.bounds().centerX(),FindTarget01.bounds().centerY());//点击预约入园
-    }else{
+for(var i=0;i<6;i++){
+    var ClickSearchResults = className("android.widget.TextView").desc("东莞市同沙生态公园公众号按钮").textContains("东莞市同沙生态公园公众号").findOne(5001);//判断搜索结果
+    if(i==5){
         var ErrType = ErrType01;
-        var ErrMsg = "找不到: '预约入园' 按钮 [Step 3]";
+        var ErrMsg = "找不到: '东莞市同沙生态公园公众号' 搜索结果关键词[Step 2]";
         Pushplus(ErrType,ErrMsg);
         toastLog(ErrType + ErrMsg);
         JsExit();
+    }else if(ClickSearchResults!==null){//找不到直接退出
+        toastLog(">点击搜索结果");
+        click(ClickSearchResults.bounds().centerX(),ClickSearchResults.bounds().centerY());//点击搜索结果
+        break;
+    }
+}
+sleep(5000);//停止5秒，等待页面加载完成
+function FindTarget01_1(){
+    for(var i=0;i<6;i++){
+        var FindTarget01 = className("android.widget.Button").text("预约入园 .").findOne(5000);//找到预约入园，5秒后点击
+        if(i==5){
+            var ErrType = ErrType01;
+            var ErrMsg = "找不到: '预约入园' 按钮 [Step 3]";
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+            JsExit();
+        }else if(FindTarget01!==null){//找不到退出
+            AppPageGet();
+            toastLog(">点击 '预约入园'");
+            click(FindTarget01.bounds().centerX(),FindTarget01.bounds().centerY());//点击预约入园
+            break;
+        }
+        sleep(1000);
     }
 }
 FindTarget01_1();
@@ -413,7 +500,14 @@ sleep(5000);
 function FindTarget02_forLoop(){
     for(var i=0;i<6;i++){
         var FindTarget02 = className("android.widget.Button").text("预约").findOne(5000);//找到预约
-        if(FindTarget02!==null){//找不到退出
+        if(i==5){
+            var ErrType = ErrType01;
+            var ErrMsg = "找不到: '预约' 按钮 [Step 4]";
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+            JsExit();
+        }else if(FindTarget02!==null){//找不到退出
+            AppPageGet();
             toastLog(">点击 '预约'");
             click(FindTarget02.bounds().centerX(),FindTarget02.bounds().centerY());//点击预约
             break;
@@ -424,23 +518,20 @@ function FindTarget02_forLoop(){
             FindTarget01_1();
         }
         sleep(5000);
-        if(i==5){
-            var FindTarget02 = className("android.widget.Button").text("预约").findOne(5000);//找到预约
-            if(FindTarget02==null){
-                var ErrType = ErrType01;
-                var ErrMsg = "找不到: '预约' 按钮 [Step 4]";
-                Pushplus(ErrType,ErrMsg);
-                toastLog(ErrType + ErrMsg);
-                JsExit();
-            }
-        }
     }
 }
 FindTarget02_forLoop();
 sleep(5000);
 for(var i=0;i<6;i++){
-    var FindTarget03 = className("android.view.View").text("拜访时段").findOne(5000);//找到拜访时段
-    if(FindTarget03!==null){//找不到退出
+    var FindTarget03 = className("android.view.View").text("拜访时段").findOne(5000);
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到: '拜访时段' 按钮 [Step 5]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(FindTarget03!==null){//找不到退出
+        AppPageGet();
         toastLog(">点击 '拜访时段'");
         click(FindTarget03.bounds().centerX(),FindTarget03.bounds().centerY());//点击拜访时段
         break;
@@ -451,31 +542,24 @@ for(var i=0;i<6;i++){
         FindTarget02_forLoop();
     }
     sleep(5000);
-    if(i==5){
-        var FindTarget03 = className("android.view.View").text("拜访时段").findOne(5000);
-        if(FindTarget03==null){
-            var ErrType = ErrType01;
-            var ErrMsg = "找不到: '拜访时段' 按钮 [Step 5]";
-            Pushplus(ErrType,ErrMsg);
-            toastLog(ErrType + ErrMsg);
-            JsExit();
-        }
-    }
 }
 sleep(3000);
-var FindTarget04 = className("android.view.View").text("确定").findOne(30000);//找到日期选择框的[确定]
-if(FindTarget04!==null){//找不到退出
-    toastLog(">滑动日期列表,并确定");
-    SetSwipe();
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "找不到: '日期选择' 面板 [Step 6]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-    JsExit();
+for(var i=0;i<6;i++){
+    var FindTarget04 = className("android.view.View").text("确定").findOne(5001);//找到日期选择框的[确定]
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到: '日期选择' 面板 [Step 6]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(FindTarget04!==null){//找不到退出
+        toastLog(">滑动日期列表,并确定");
+        SetSwipe();
+        break;
+    }
 }
 sleep(5000);
-click(FindTarget04.bounds().centerX(),FindTarget04.bounds().centerY());//点击日期选择[确定]
+while(!click(FindTarget04.bounds().centerX(),FindTarget04.bounds().centerY()));//点击日期选择[确定]
 sleep(500);
 var FindTarget05 = className("android.view.View").text("当前时间段预约已满,请重新调整时间").findOne(500);//找到预约已满
 if(FindTarget05!==null){//找不到退出
@@ -485,40 +569,50 @@ if(FindTarget05!==null){//找不到退出
     toastLog(ErrType + ErrMsg);
     JsExit();
 }else{
-    toastLog("i可预约");
+    log("i可预约");
 }
 sleep(500);
-var FindTarget06 = className("android.widget.Button").text("游玩").findOne(500);//找到游玩
-if(FindTarget06!==null){//找不到退出
-    toastLog(">点击 '游玩'");
-    click(FindTarget06.bounds().centerX(),FindTarget06.bounds().centerY());//点击游玩
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "找不到: '游玩' 选项 [Step 8]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-    JsExit();
+for(var i=0;i<6;i++){
+    var FindTarget06 = className("android.widget.Button").text("游玩").findOne(500);//找到游玩
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到: '游玩' 选项 [Step 8]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(FindTarget06!==null){//找不到退出
+        toastLog(">点击 '游玩'");
+        click(FindTarget06.bounds().centerX(),FindTarget06.bounds().centerY());//点击游玩
+        break;
+    }
 }
 sleep(500);
-var FindTarget07 = className("android.widget.Button").text("下一步").findOne(500);//找到下一步
-if(FindTarget07!==null){//找不到退出
-    toastLog(">点击 '下一步'");
-    click(FindTarget07.bounds().centerX(),FindTarget07.bounds().centerY());//点击下一步
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "找不到: '下一步' 按钮 [Step 9]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-    JsExit();
+for(var i=0;i<6;i++){
+    var FindTarget07 = className("android.widget.Button").text("下一步").findOne(500);//找到下一步
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到: '下一步' 按钮 [Step 9]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(FindTarget07!==null){//找不到退出
+        toastLog(">点击 '下一步'");
+        click(FindTarget07.bounds().centerX(),FindTarget07.bounds().centerY());//点击下一步
+        break;
+    }
 }
 sleep(5000);
-var FindTarget08 = className("android.view.View").text("访客信息").findOne(30000);//找到访客信息，判断能否顺利加载
-if(FindTarget08==null){//找不到退出
-    var ErrType = ErrType01;
-    var ErrMsg = "无法进入访客信息填写页面 [找不到: 访客信息 关键字] [Step 10]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-    JsExit();
+for(var i=0;i<6;i++){
+    var FindTarget08 = className("android.view.View").text("访客信息").findOne(5001);//找到访客信息，判断能否顺利加载
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "无法进入访客信息填写页面 [找不到: 访客信息 关键字] [Step 10]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(FindTarget08!==null){//找不到退出
+        break;
+    }
 }
 function AddCarPlate_Cancel_1(){
     var AddCarPlate_Cancel = className("android.widget.Button").text("取消").findOne(500);//找到车牌输入框取消按钮
@@ -532,22 +626,24 @@ function AddCarPlate_Cancel_1(){
     }
 }
 function AddCarPlate_Loop(){
+    AppPageGet();
     toastLog(">点击 '继续添加车牌'");
     for(var i=0;i<2;i++){
         var AddCarPlate = className("android.widget.TextView").text("继续添加车牌").findOne(500);//找到继续添加车牌
-        if(AddCarPlate!==null){//找到就点击，否则推送消息
+        if(AddCarPlate!==null){
             click(AddCarPlate.bounds().centerX(),AddCarPlate.bounds().centerY());//点击继续添加车牌
-        }else{
+            sleep(500);
+            AddCarPlate_Cancel_1();
+        }else{//找到就点击，否则推送消息
             var ErrType = ErrType02;
-            var ErrMsg = "找不到: '继续添加车牌' 按钮 [Step 11]";
+            var ErrMsg = "找不到: '继续添加车牌' 按钮,添加车牌数量受限 [Step 11]";
             Pushplus(ErrType,ErrMsg);
             toastLog(ErrType + ErrMsg);
+            break;
         }
-        //toastLog(i);
-        sleep(500);
-        AddCarPlate_Cancel_1();
         sleep(500);
     }
+    //toastLog(i);
 }
 AddCarPlate_Loop();
 AddCarPlate_Cancel_1();
@@ -557,6 +653,7 @@ if(FindTarget09!==null){//找不到退出
     toastLog(">点击 '历史记录'");
     click(FindTarget09.bounds().centerX(),FindTarget09.bounds().centerY());//点击历史记录
     sleep(500);
+    AppPageGet();
     back();
     toastLog("i因页面有BUG,继续添加车牌号输入框就必须转跳页面!");
 }else{
@@ -568,37 +665,43 @@ if(FindTarget09!==null){//找不到退出
 sleep(1000);
 AddCarPlate_Loop();
 sleep(500);
-var TextInput = className("android.widget.EditText").findOne(500);//找到输入框
-if(TextInput!==null){//找不到退出
-    toastLog(">填充访客信息");
-//  姓名、手机号、随行人数 填写
-    setText(0,Text00);
-    setText(1,Text01);
-    setText(2,Text02);
-//  车牌号 填写，最多5个
-    setText(3,Text03);
-    setText(4,Text04);
-    setText(5,Text05);
-    setText(6,Text06);
-    setText(7,Text07);
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "找不到: '访客信息' 输入框 [Step 14]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-    JsExit();
+for(var i=0;i<6;i++){
+    var TextInput = className("android.widget.EditText").findOne(500);//找到输入框
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到: '访客信息' 输入框 [Step 14]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(TextInput!==null){//找不到退出
+        toastLog(">填充访客信息");
+    //  姓名、手机号、随行人数 填写
+        setText(0,Text00);
+        setText(1,Text01);
+        setText(2,Text02);
+    //  车牌号 填写，最多5个
+        setText(3,Text03);
+        setText(4,Text04);
+        setText(5,Text05);
+        setText(6,Text06);
+        setText(7,Text07);
+        break;
+    }
 }
 sleep(500);
-var FindTarget10 = className("android.widget.Button").text("提交").enabled(true).focusable(true).findOne(500);//找到提交
-if(FindTarget10!==null){//找不到退出
-    toastLog(">点击 '提交'");
-    click(FindTarget10.bounds().centerX(),FindTarget10.bounds().centerY());//点击提交
-}else{
-    var ErrType = ErrType01;
-    var ErrMsg = "找不到: 访客信息 '提交' 按钮,或信息填写有误 [Step 15]";
-    Pushplus(ErrType,ErrMsg);
-    toastLog(ErrType + ErrMsg);
-    JsExit();
+for(var i=0;i<6;i++){
+    var FindTarget10 = className("android.widget.Button").text("提交").enabled(true).focusable(true).findOne(500);//找到提交
+    if(i==5){
+        var ErrType = ErrType01;
+        var ErrMsg = "找不到: 访客信息 '提交' 按钮,或信息填写有误 [Step 15]";
+        Pushplus(ErrType,ErrMsg);
+        toastLog(ErrType + ErrMsg);
+        JsExit();
+    }else if(FindTarget10!==null){//找不到退出
+        toastLog(">点击 '提交'");
+        click(FindTarget10.bounds().centerX(),FindTarget10.bounds().centerY());//点击提交
+        break;
+    }
 }
 sleep(500);
 var FindTarget11 = className("android.view.View").text("拜访时间重叠,请检查后重试!").findOne(500);//找到拜访时间重叠
@@ -611,33 +714,44 @@ if(FindTarget11!==null){//找到就给提示
 }
 sleep(5000);
 function FindTarget12_1(){
-    var FindTarget12 = className("android.widget.Button").text("查看记录").findOne(30000);//找到查看记录
-    if(FindTarget12!==null){//推送消息或退出
-        toastLog(">点击 '查看记录'");
-        click(FindTarget12.bounds().centerX(),FindTarget12.bounds().centerY());
-        var ErrType = ErrType06;
-        var ErrMsg = "预约成功!";
-        Pushplus(ErrType,ErrMsg);
-        toastLog(ErrType + ErrMsg);
-    }else{
-        var ErrType = ErrType03;
-        var ErrMsg = "'预约成功' 页面载入失败,可能预约失败,将无法获取访客预约信息 [找不到: 查看记录 关键字] [Step 17]";
-        Pushplus(ErrType,ErrMsg);
-        toastLog(ErrType + ErrMsg);
-        JsExit();
+    for(var i=0;i<6;i++){
+        var FindTarget12 = className("android.widget.Button").text("查看记录").findOne(5001);//找到查看记录
+        if(i==5){
+            var ErrType = ErrType03;
+            var ErrMsg = "'预约成功' 页面载入失败,可能预约失败,将无法获取访客预约信息 [找不到: 查看记录 关键字] [Step 17]";
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+            JsExit();
+        }else if(FindTarget12!==null){//推送消息或退出
+            AppPageGet();
+            toastLog(">点击 '查看记录'");
+            click(FindTarget12.bounds().centerX(),FindTarget12.bounds().centerY());
+            var ErrType = ErrType06;
+            var ErrMsg = "预约成功!";
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+            break;
+        }
     }
 }
 FindTarget12_1();
 sleep(5000);
 function ClickListButton_forLoop(){
     for(var i=0;i<6;i++){
+        AppPageGet();
         toastLog(">上滑");
         for(var i=0;i<10;i++){
             className("android.view.View").scrollUp();
             sleep(500);
         }
         var ClickListButton = className("android.widget.TextView").text("详细").findOne(5000);
-        if(ClickListButton!==null){
+        if(i==5){
+            var ErrType = "找不到: 拜访记录页面 '详细' 按钮,可能无法打开页面,将无法获取访客预约信息";
+            var ErrMsg = ErrType;
+            Pushplus(ErrType,ErrMsg);
+            toastLog(ErrType + ErrMsg);
+            JsExit();
+        }else if(ClickListButton!==null){
             toastLog(">点击 '详细'");
             click(ClickListButton.bounds().centerX(),ClickListButton.bounds().centerY());
             break;
@@ -648,24 +762,19 @@ function ClickListButton_forLoop(){
             FindTarget12_1();
         }
         sleep(5000);
-        if(i==5){
-            var ClickListButton = className("android.widget.TextView").text("详细").findOne(5000);
-            if(ClickListButton==null){
-                var ErrType = "找不到: 拜访记录页面 '详细' 按钮,可能无法打开页面,将无法获取访客预约信息";
-                var ErrMsg = ErrType;
-                Pushplus(ErrType,ErrMsg);
-                toastLog(ErrType + ErrMsg);
-                JsExit();
-            }
-        }
     }
 }
 ClickListButton_forLoop();
 sleep(5000);
 for(var i=0;i<6;i++){
+    AppPageGet();
     toastLog(">获取-发送 '访客信息'");
     var PhoneTake = className("android.view.View").textContains("*").textContains("手机号").findOne(500);
-    if(PhoneTake!==null){
+    if(i==5){
+        var OutputMsg02 = "找不到: 拜访记录页面 '访客手机号'";
+        toastLog(OutputMsg02);
+        break;
+    }else if(PhoneTake!==null){
         var OutputMsg02 = PhoneTake.getText();
         toastLog(OutputMsg02);
         break;
@@ -673,16 +782,19 @@ for(var i=0;i<6;i++){
         toastLog(ErrType07);
         back();
         sleep(1000);
-        ClickListButton_forLoop();
-    }
-    sleep(5000);
-    if(i==5){
-        var PhoneTake = className("android.view.View").textContains("*").textContains("手机号").findOne(500);
-        if(PhoneTake==null){
-            var OutputMsg02 = "找不到: 拜访记录页面 '访客手机号'";
-            toastLog(OutputMsg02);
+        var FindTarget12 = className("android.widget.Button").text("查看记录").findOne(5001);
+        if(FindTarget12!==null){
+            FindTarget12_1();
+            sleep(5000);
+            ClickListButton_forLoop();
+        }else{
+            var ClickListButton = className("android.widget.TextView").text("详细").findOne(5000);
+            if(ClickListButton!==null){
+                ClickListButton_forLoop();
+            }
         }
     }
+    sleep(5000);
 }
 var UseNameTake = className("android.view.View").textContains(Text00).findOne(500);
 if(UseNameTake!==null){
@@ -716,7 +828,7 @@ if(CarNumber01!==null){
 }else if(CarNumber02!==null){
     click(CarNumber02.bounds().centerX(),CarNumber02.bounds().centerY());
     sleep(500);
-    var CarNumber03 = className("android.view.View").textContains("、").textContains("-").findOne(30000);
+    var CarNumber03 = className("android.view.View").textContains("、").textContains("-").findOne(5001);
     var OutputMsg05 = "访客车辆 " + CarNumber03.getText();
     toastLog(OutputMsg05);
 }else{

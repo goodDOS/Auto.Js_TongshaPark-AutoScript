@@ -1,3 +1,9 @@
+engines.all().map((ScriptEngine) => {
+    if(engines.myEngine().toString()!==ScriptEngine.toString()){
+        ScriptEngine.forceStop();
+        toastLog("已关闭其它正在运行的脚本!");
+    }
+});
 function JsLaunch(){
     try{
         var scriptsPath = "/sdcard/脚本/";
@@ -10,7 +16,7 @@ function JsLaunch(){
         toastLog("启动脚本!");
     }
     catch(err){
-        log(err);
+        log("**(此条文件报错已省略)**");
         if(err!==null){
             toastLog("找不到目标脚本!");
         }
@@ -32,7 +38,7 @@ for(var i=0;i<4;i++){
         }
     }
     catch(err){
-        log(err);
+        log("**(此条网络报错已省略)**");
         if(err!==null){
             toastLog("微信开放平台不可访问,网络异常,将在5分钟后重试!重试次数: (" + i + "/3) ");
         }
